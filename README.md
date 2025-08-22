@@ -1,0 +1,1 @@
+An example of simple Quarto dynamic dashboard.

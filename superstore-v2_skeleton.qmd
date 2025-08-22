@@ -1,0 +1,96 @@
+---
+title: "Superstore V2"
+format:
+  dashboard:
+    logo: super.png
+server: shiny
+---
+
+```{python}
+# load python library
+
+# load and prepare data
+
+```
+
+## {.sidebar}
+```{python}
+ui.input_select()
+
+ui.input_radio_buttons()
+```
+
+___
+
+**Source**
+
+Data: [Superstore Sales](https://public.tableau.com/app/learn/sample-data) from Tableau Sample Data
+
+Store Icon: [Superman icons](https://www.flaticon.com/free-icons/superman) created by Kalashnyk - Flaticon
+
+```{python}
+@reactive.calc
+def ss_year():
+    return ss[ss["Ship Date"].dt.year==int(input.year())]
+
+@reactive.calc
+def sales():
+    return ss_year()["Sales"].sum()
+
+# more reactive calculation
+
+```
+
+## Column {width=20%}
+```{python}
+#| title: Total Sales
+#| padding: 0
+@render.ui
+def sales_value_box():
+    return shiny.ui.value_box(title="", value=f"${sales():,.0f}")
+```
+
+```{python}
+#| title: Total Profit
+#| padding: 0
+@render.ui
+def profit_value_box():
+    return shiny.ui.value_box(title = "", value = f"${profit():,.0f}")
+```
+
+## Column {width=40%}
+```{python}
+#| title: by State
+#| padding: 0
+
+@render_widget
+def plot_by_state():
+    fig = px.scatter_geo()
+    fig.layout.update()
+    return fig
+```
+
+```{python}
+#| title: by Segment
+#| padding: 0
+
+@render_widget
+def plot_by_segment()
+```
+
+## Column {width=40%}
+```{python}
+#| title: by Category
+#| padding: 0
+
+@render_widget
+def plot_by_category()
+```
+
+```{python}
+#| title: by Sub-Category (top 10)
+#| padding: 0
+
+@render_widget
+def plot_by_subcategory()
+```
